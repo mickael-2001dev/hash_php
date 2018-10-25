@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>PHP Hashs</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Roboto');
+        body{
+            margin: 2%;
+            font-family: 'Roboto', sans-serif;
+        }
+        table td, th{
+            padding: 10px;
+        }
+        #btn{
+            box-shadow: none;
+            border: none;
+            color: #fff;
+            background-color: #dd2233;
+            width: 100px;
+            height: 24px;
+            padding: 2px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hashs</h1>
+    <form method="post" id="form">
+        <label>Texto: </label>
+        <input type="text" name="text">
+        <input type="submit" value="Enviar" id="btn">
+    </form>
+    <br>
+    <table border="1" id="hash_table">
+        <thead>
+            <th>Sha256</th>
+            <th>Gost</th>
+            <th>Md2</th>
+        </thead>
+        <tbody id="hash">
+        
+        </tbody>
+    </table>
+    <br>
+    <p>Uma função hash é um algoritmo que mapeia dados de comprimento variável para dados de comprimento fixo.</p>
+    <p>Os valores retornados por uma função hash são chamados valores hash, códigos hash,</p>
+    <p>somas hash (hash sums), checksums ou simplesmente hashes.</p>
+    <br>
+    <p>SHA-256 e <strong>SHA-512</strong> são funções hash inovadoras computadas com palavras de 32 bytes e 64 bytes,</p> 
+    <p>respectivamente. Eles usam quantidades de deslocamento e constantes aditivas diferentes, </p>
+    <p>mas as suas estruturas são praticamente idênticas, diferindo apenas no número de rodadas.</p>
+    <br>
+    <p><strong>GOST</strong> 28147-89 é um cifrador em bloco de chave simétrica padronizado pelos governos Russo e Soviético.</p>
+    <p>Desenvolvido nos anos 70, o padrão era marcado com "Ultra-Secreto" e então foi rebaixado a "Secreto" em 1990. </p>
+    <p>Logo após a dissolução da URSS, o GOST 28147 foi desclassificado e mostrado publicamente em 1994. 
+    <p>O GOST 28147 foi uma alternativa Soviética ao algoritmo padrão americano, o Data Encryption Standard.</p>
+    <p>Por isso ambos são muito similares na estrutura.</p>
+    <br>
+    <p>O <strong>MD2</strong> é um algoritmo de hash que cria um valor de hash de 128 bits funciona semelhante ao algoritmo de MD4</p>
+    <p>e foram desenvolvidos pela RSA Data Security, Inc.</p>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+
+            $('#hash_table').hide();
+
+           $('#form').submit(function(){
+
+                var data = $('#form').serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'hash.php',
+                    data: data,
+                    dataType: 'json',
+                    success: function(response) {
+
+                        console.log(response);
+
+                        $('#hash_table').show();
+                        $('#hash').html('<tr><td>'+response.sha512+'</td><td>'+response.gost+'</td><td>'+response.md2+'</td></tr>');
+                       
+                    }
+                });
+
+                return false;
+           });
+        });
+    </script>
+</body>
+</html>
